@@ -37,7 +37,7 @@ public class BlockControl : MonoBehaviour {
                 //GameObject nowChunk= Map.instance.GetChunk(chunkpos);//通过坐标获取到当前chunk
                 nowChunk = Map.instance.GetChunk(chunkpos);//通过坐标获取到当前chunk
                 //通过坐标及当前chunk找到当前block
-                int xb = Mathf.FloorToInt(hitInfo.point.x) + 1;
+                int xb = Mathf.FloorToInt(hitInfo.point.x);
                 int yb = Mathf.FloorToInt(hitInfo.point.y);
                 int zb = Mathf.FloorToInt(hitInfo.point.z);
                 Vector3i blockpos = new Vector3i(xb, yb, zb);
@@ -48,26 +48,24 @@ public class BlockControl : MonoBehaviour {
                 //delete block
                 if (Input.GetKeyDown("e"))
                 {
-                    print(chunkpos);
+                    //print(chunkpos);
                     blockpos = nowChunk.getBlock(blockpos);
-                    print(blockpos);
+                    //print(blockpos);
                     blockpos =modifyBlock(hitInfo, blockpos,ref nowChunk);//整合修正块坐标及处理chunk边界
-                    //blockpos = nowChunk.getBlock(blockpos);
-                    print(nowChunk.position);
-                    print(blockpos);
+                    //print(nowChunk.position);
+                    //print(blockpos);
                     nowChunk.setDeleteBlock(blockpos);
                 }
 
                 //add block
                 if (Input.GetKeyDown("q"))
                 {
-                    print(chunkpos);
+                    //print(chunkpos);
                     blockpos = nowChunk.getBlock(blockpos);
                     blockpos = modifyBlock(hitInfo, blockpos, ref nowChunk);//整合修正块坐标及处理chunk边界
-
                     blockpos = modifyBlockAdd(hitInfo, blockpos, ref nowChunk);//修正添加块及处理chunk边界
-                    print(nowChunk.position);
-                    print(blockpos);
+                    //print(nowChunk.position);
+                    //print(blockpos);
                     nowChunk.setAddBlock(blockpos);
 
                 }
@@ -105,17 +103,15 @@ public class BlockControl : MonoBehaviour {
             block += new Vector3i(-1, 0, 0);
             if (block.x == -1)
             {
-                block.x = Chunk.width+(-1);
+                block.x = Chunk.width + (-1);
+                Vector3i chunkposnew = chunk.position;
+                chunkposnew.x += (Chunk.width * -1);//新chunk坐标
+                chunk = Map.instance.GetChunk(chunkposnew);
             }
         }
         else if (hit.normal.x < 0)//后
         {
-            if (block.x == 0)
-            {
-                Vector3i chunkposnew = chunk.position;
-                chunkposnew.x += (Chunk.width * +1);//新chunk坐标
-                chunk = Map.instance.GetChunk(chunkposnew);
-            }
+            
         }
         else if (hit.normal.z > 0)//右
         {

@@ -126,6 +126,7 @@ namespace MyBox.Voxel
             vertices.Clear();
             triangles.Clear();
             uv.Clear();
+            mesh.Clear();
 
             //把所有面的点和面的索引添加进去
             for (int x = 0; x < Chunk.width; x++)
@@ -138,8 +139,6 @@ namespace MyBox.Voxel
                         Block block = BlockList.GetBlock(this.blocks[x, y, z]);
                         if (block == null) continue;
                         
-
-
                         //通过查看相邻块是否透明来检查此面是否需要开启
                         if (IsBlockTransparent(x + 1, y, z))
                         {
@@ -169,7 +168,7 @@ namespace MyBox.Voxel
                 }
             }
 
-
+                      
             //为点和index赋值
             mesh.vertices = vertices.ToArray();
             mesh.triangles = triangles.ToArray();
@@ -184,8 +183,8 @@ namespace MyBox.Voxel
             this.GetComponent<MeshCollider>().sharedMesh = mesh;
 
             isWorking = false;
-            return ;
-            
+            return;
+
         }
 
 
@@ -219,10 +218,10 @@ namespace MyBox.Voxel
 
 
             //添加4个点
-            vertices.Add(new Vector3(0 + x, 0 + y, 0 + z));//在单个基础上加上坐标即可
-            vertices.Add(new Vector3(0 + x, 0 + y, 1 + z));
-            vertices.Add(new Vector3(0 + x, 1 + y, 1 + z));
-            vertices.Add(new Vector3(0 + x, 1 + y, 0 + z));
+            vertices.Add(new Vector3(1 + x, 0 + y, 0 + z));//在单个基础上加上坐标即可
+            vertices.Add(new Vector3(1 + x, 0 + y, 1 + z));
+            vertices.Add(new Vector3(1 + x, 1 + y, 1 + z));
+            vertices.Add(new Vector3(1 + x, 1 + y, 0 + z));
 
 
             //添加UV坐标点，跟上面4个点循环的顺序一致
@@ -251,10 +250,10 @@ namespace MyBox.Voxel
 
 
             //添加4个点
-            vertices.Add(new Vector3(-1 + x, 0 + y, 1 + z));
-            vertices.Add(new Vector3(-1 + x, 0 + y, 0 + z));
-            vertices.Add(new Vector3(-1 + x, 1 + y, 0 + z));
-            vertices.Add(new Vector3(-1 + x, 1 + y, 1 + z));
+            vertices.Add(new Vector3(0 + x, 0 + y, 1 + z));
+            vertices.Add(new Vector3(0 + x, 0 + y, 0 + z));
+            vertices.Add(new Vector3(0 + x, 1 + y, 0 + z));
+            vertices.Add(new Vector3(0 + x, 1 + y, 1 + z));
 
             //添加UV坐标点，跟上面4个点循环的顺序一致
             uv.Add(new Vector2(block.textureBackX * textureOffset, block.textureBackY * textureOffset)
@@ -282,10 +281,10 @@ namespace MyBox.Voxel
 
 
             //添加4个点
+            vertices.Add(new Vector3(1 + x, 0 + y, 1 + z));
             vertices.Add(new Vector3(0 + x, 0 + y, 1 + z));
-            vertices.Add(new Vector3(-1 + x, 0 + y, 1 + z));
-            vertices.Add(new Vector3(-1 + x, 1 + y, 1 + z));
             vertices.Add(new Vector3(0 + x, 1 + y, 1 + z));
+            vertices.Add(new Vector3(1 + x, 1 + y, 1 + z));
 
             //添加UV坐标点，跟上面4个点循环的顺序一致
             uv.Add(new Vector2(block.textureRightX * textureOffset, block.textureRightY * textureOffset)
@@ -313,10 +312,10 @@ namespace MyBox.Voxel
 
 
             //添加4个点
-            vertices.Add(new Vector3(-1 + x, 0 + y, 0 + z));
             vertices.Add(new Vector3(0 + x, 0 + y, 0 + z));
+            vertices.Add(new Vector3(1 + x, 0 + y, 0 + z));
+            vertices.Add(new Vector3(1 + x, 1 + y, 0 + z));
             vertices.Add(new Vector3(0 + x, 1 + y, 0 + z));
-            vertices.Add(new Vector3(-1 + x, 1 + y, 0 + z));
 
             //添加UV坐标点，跟上面4个点循环的顺序一致
             uv.Add(new Vector2(block.textureLeftX * textureOffset, block.textureLeftY * textureOffset)
@@ -344,10 +343,10 @@ namespace MyBox.Voxel
 
 
             //添加4个点
-            vertices.Add(new Vector3(0 + x, 1 + y, 0 + z));
+            vertices.Add(new Vector3(1 + x, 1 + y, 0 + z));
+            vertices.Add(new Vector3(1 + x, 1 + y, 1 + z));
             vertices.Add(new Vector3(0 + x, 1 + y, 1 + z));
-            vertices.Add(new Vector3(-1 + x, 1 + y, 1 + z));
-            vertices.Add(new Vector3(-1 + x, 1 + y, 0 + z));
+            vertices.Add(new Vector3(0 + x, 1 + y, 0 + z));
 
             //添加UV坐标点，跟上面4个点循环的顺序一致
             uv.Add(new Vector2(block.textureTopX * textureOffset, block.textureTopY * textureOffset)
@@ -375,10 +374,10 @@ namespace MyBox.Voxel
 
 
             //添加4个点
-            vertices.Add(new Vector3(-1 + x, 0 + y, 0 + z));
-            vertices.Add(new Vector3(-1 + x, 0 + y, 1 + z));
-            vertices.Add(new Vector3(0 + x, 0 + y, 1 + z));
             vertices.Add(new Vector3(0 + x, 0 + y, 0 + z));
+            vertices.Add(new Vector3(0 + x, 0 + y, 1 + z));
+            vertices.Add(new Vector3(1 + x, 0 + y, 1 + z));
+            vertices.Add(new Vector3(1 + x, 0 + y, 0 + z));
 
             //添加UV坐标点，跟上面4个点循环的顺序一致
             uv.Add(new Vector2(block.textureBottomX * textureOffset, block.textureBottomY * textureOffset)
@@ -396,7 +395,7 @@ namespace MyBox.Voxel
         public Vector3i getBlock(Vector3i pos)//获取块的位置，传入为射线点
         {
             pos.x -= this.position.x;
-            if (pos.x == 16) pos.x = 0;
+            //if (pos.x == 16) pos.x = 0;
             pos.z -= this.position.z;
             pos.y -= this.position.y;
             return pos;
@@ -405,7 +404,7 @@ namespace MyBox.Voxel
 
         public void setDeleteBlock(Vector3i pos)//传入为上个函数的结果，block的坐标，也是id
         {
-            print(blocks[pos.x, pos.y, pos.z]);
+            //print(blocks[pos.x, pos.y, pos.z]);
             if (blocks[pos.x, pos.y, pos.z] != 0)
             {
                 blocks[pos.x, pos.y, pos.z] = 0;
@@ -413,14 +412,13 @@ namespace MyBox.Voxel
                 CreateMesh();//开启协程，创建网格
             }
 
-
             //print(blocks[pos.x, pos.y, pos.z]);
 
         }
 
         public void setAddBlock(Vector3i pos)
         {
-            print(blocks[pos.x, pos.y, pos.z]);
+            //print(blocks[pos.x, pos.y, pos.z]);
             if (blocks[pos.x, pos.y, pos.z] == 0)
             {
                 blocks[pos.x, pos.y, pos.z] = 1;
