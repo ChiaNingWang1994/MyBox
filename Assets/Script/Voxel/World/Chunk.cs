@@ -13,6 +13,9 @@ namespace MyBox.Voxel
     [RequireComponent(typeof(MeshCollider))]
     public class Chunk:MonoBehaviour
     {
+        //public byte addBlockType = 1;
+        
+
         public static int width = 16;//尺寸
         public static int height = 16;
 
@@ -27,8 +30,8 @@ namespace MyBox.Voxel
         private List<int> triangles = new List<int>();
         //所有uv信息的容器
         private List<Vector2> uv = new List<Vector2>();
-        //uv的宽度为0~1，则根据图的不同，每块信息不同，此块为32格
-        public static float textureOffset = 1 / 32.0f;
+        //uv的宽度为0~1，则根据图的不同，每块信息不同，此块为32格//更改贴图
+        public static float textureOffset = 1 / 16.0f;
         //让UV稍微缩小一点，避免出现它旁边的贴图//避免出现白边及杂色
         public static float shrinkSize = 0.001f;
 
@@ -109,6 +112,10 @@ namespace MyBox.Voxel
                         else//否则赋予本身0或1
                         {
                             blocks[x, y, z] = Terrain.GetTerrainBlock(new Vector3i(x, y, z) + position);
+                        }
+                        if (this.position.y == 0)//最下层的chunk
+                        {
+                            if (y == 0) { blocks[x, y, z] = 10; }//最下层的block的为基岩
                         }
                         //blocks[x, y, z] = Terrain.GetTerrainBlock(new Vector3i(x, y, z) + position);
 
@@ -405,7 +412,8 @@ namespace MyBox.Voxel
         public void setDeleteBlock(Vector3i pos)//传入为上个函数的结果，block的坐标，也是id
         {
             //print(blocks[pos.x, pos.y, pos.z]);
-            if (blocks[pos.x, pos.y, pos.z] != 0)
+            //不为空且不为基岩
+            if (blocks[pos.x, pos.y, pos.z] != 0 && blocks[pos.x, pos.y, pos.z] != 10)
             {
                 blocks[pos.x, pos.y, pos.z] = 0;
                 //重绘网格
@@ -421,7 +429,8 @@ namespace MyBox.Voxel
             //print(blocks[pos.x, pos.y, pos.z]);
             if (blocks[pos.x, pos.y, pos.z] == 0)
             {
-                blocks[pos.x, pos.y, pos.z] = 1;
+                
+                blocks[pos.x, pos.y, pos.z] = blockUI.instance.blocktype;
                 //重绘网格
                 CreateMesh();//开启协程，创建网格
             }

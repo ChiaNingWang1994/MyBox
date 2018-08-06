@@ -9,24 +9,34 @@ public class BlockControl : MonoBehaviour {
     private GameObject play;
     private int layerMask;
     Chunk nowChunk;
+    public float maxDistance;
+    private bool godDistance;
 
     // Use this for initialization
     void Start () {
         play = GameObject.Find("FirstPersonCharacter");
         layerMask = LayerMask.GetMask("Chunk");
-	}
+        maxDistance = 3.0f;
+        godDistance = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
         
         Ray ray = new Ray( play.transform.position, play.transform.forward);
         RaycastHit hitInfo;
+        if (Input.GetKeyDown(KeyCode.F1))//上帝无限远距离
+        {
+            godDistance = !godDistance;
+            if (godDistance) maxDistance = Mathf.Infinity;
+            else maxDistance = 3.0f;
+        }
 
-        if(Physics.Raycast(ray,out hitInfo,2.5f,layerMask))
+        if(Physics.Raycast(ray,out hitInfo,maxDistance,layerMask))
         {
             Debug.DrawLine(play.transform.position, hitInfo.point, Color.red);
             
-            if ( hitInfo.distance>0.0f && hitInfo.distance <= 2.5f)//过远则不操作
+            if ( hitInfo.distance>0.0f && hitInfo.distance <= maxDistance)//过远则不操作
             {
                 //print(hitInfo.point);
                 int xc = Chunk.width * Mathf.FloorToInt(hitInfo.point.x / Chunk.width);

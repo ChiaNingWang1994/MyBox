@@ -18,12 +18,13 @@ public class Terrain : MonoBehaviour {
         Vector3 offset = new Vector3(Random.value * 100000, Random.value * 100000, Random.value * 100000);
 
 
-        float noiseX = Mathf.Abs((worldPosition.x + offset.x) / 20);
-        float noiseY = Mathf.Abs((worldPosition.y + offset.y) / 20);
+        float noiseX = Mathf.Abs((worldPosition.x + offset.x) / 20);//改变地形的平缓程度，值越大越平缓
+        float noiseY = Mathf.Abs((worldPosition.y + offset.y) / 20);//不要小于20
         float noiseZ = Mathf.Abs((worldPosition.z + offset.z) / 20);
         double noiseValue = noise.GetValue(noiseX, noiseY, noiseZ);
-
-        noiseValue += (20 - worldPosition.y) / 15f;
+        
+        //没有此两行就为洞窟地貌
+        noiseValue += (20 - worldPosition.y) / 15f;//30改变修正山高度，也可以为将整体噪音图像向上平移
         noiseValue /= worldPosition.y / 5f;
 
         if (noiseValue > 0.5f)
