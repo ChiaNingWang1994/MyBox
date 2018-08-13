@@ -237,7 +237,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()
         {
-            m_MouseLook.LookRotation (transform, m_Camera.transform);
+            //有鼠标（暂停）不转视角
+            if (!Cursor.visible) {
+                m_MouseLook.LookRotation(transform, m_Camera.transform);
+            }
+            
         }
 
 

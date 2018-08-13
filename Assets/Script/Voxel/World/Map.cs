@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace MyBox.Voxel
 {
-    public class Map : MonoBehaviour
+    public class Map : SingletonMono<Map>
     {
-        public static Map instance;//单例map对象
+        //public static Map instance;//单例map对象
 
         //public static GameObject chunkPrefab;//chunk对象
         public static GameObject chunkPrefab;//chunk对象
@@ -23,9 +23,10 @@ namespace MyBox.Voxel
         private bool spawningChunk = false;
 
 
-        void Awake()
+        protected override void Awake()
         {
-            instance = this;
+            //instance = this;
+            base.Awake();
             chunkPrefab = Resources.Load("Prefab/Chunk") as GameObject;//加载预制体
         }
 

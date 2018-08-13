@@ -44,14 +44,14 @@ namespace MyBox.Voxel
         void Start()
         {
             position = new Vector3i(this.transform.position);//初始化位置信息
-            if (Map.instance.ChunkExists(position))//位置是否已经存在
+            if (Map.Instance.ChunkExists(position))//位置是否已经存在
             {
                 Debug.Log("此方块已经存在" + position);
                 Destroy(this);//移除
             }
             else
             {
-                Map.instance.chunks.Add(position, this);//存储在map里
+                Map.Instance.chunks.Add(position, this);//存储在map里
                 this.name = "(" + position.x + "," + position.y + "," + position.z + ")";//对象命名
                 //StartFunction();//开始操作
             }
@@ -430,7 +430,7 @@ namespace MyBox.Voxel
             if (blocks[pos.x, pos.y, pos.z] == 0)
             {
                 
-                blocks[pos.x, pos.y, pos.z] = blockUI.instance.blocktype;
+                blocks[pos.x, pos.y, pos.z] = blockUI.Instance.blocktype;
                 //重绘网格
                 CreateMesh();//开启协程，创建网格
             }

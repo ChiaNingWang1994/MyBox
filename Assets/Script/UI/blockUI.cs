@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class blockUI : MonoBehaviour {
+public class blockUI : SingletonMono<blockUI> {
 
-    public static blockUI instance;//单例map对象
+    //public static blockUI instance;//单例map对象
 
     public Image blockImage;
     public List<Sprite> blockIcon;
     private int nowicon;
     public byte blocktype;
 
-    void Awake()
+    protected override void Awake()
     {
-        instance = this;
+        //instance = this;
+        base.Awake();
         for (int i = 1; i < 8; i++)//不包含两个玻璃效果
         {
             string path = "icon/block_" + i;

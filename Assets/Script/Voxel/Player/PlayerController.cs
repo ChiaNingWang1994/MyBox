@@ -6,7 +6,7 @@ using MyBox.Voxel;
 
 public class PlayerController : MonoBehaviour {
 
-    //生成范围
+    //视线范围
     public int viewRange = 30;
 
 	// Use this for initialization
@@ -32,9 +32,9 @@ public class PlayerController : MonoBehaviour {
                         int xx = Chunk.width * Mathf.FloorToInt(x / Chunk.width);
                         int yy = Chunk.height * Mathf.FloorToInt(y / Chunk.height);
                         int zz = Chunk.width * Mathf.FloorToInt(z / Chunk.width);
-                        if (!Map.instance.ChunkExists(xx, yy, zz))
+                        if (!Map.Instance.ChunkExists(xx, yy, zz))
                         {
-                            Map.instance.CreateChunk(new Vector3i(xx, yy, zz));
+                            Map.Instance.CreateChunk(new Vector3i(xx, yy, zz));
                         }
 
                     }
