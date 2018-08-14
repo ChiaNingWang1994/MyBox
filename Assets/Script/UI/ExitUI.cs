@@ -29,5 +29,6 @@ public class ExitUI : UIBasePanel {
     private void OnClose(GameObject obj)
     {
         UIPanelManager.Instance.hideUI(this.id);
+        Destroy(this.gameObject);
     }
 }
